@@ -3,195 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Margdarshak - Socratic Tutor</title>
+    <title>Margdarshak | Academic Mentor</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .glass-morphism {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        .message-bubble {
-            max-width: 85%;
-            animation: fadeIn 0.3s ease-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .loader {
-            border: 2px solid #f3f3f3;
-            border-top: 2px solid #3498db;
-            border-radius: 50%;
-            width: 16px;
-            height: 16px;
-            animation: spin 1s linear infinite;
-            display: inline-block;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .msg { max-width: 85%; animation: slide 0.2s ease-out; }
+        @keyframes slide { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .dot-loader { display: flex; gap: 4px; }
+        .dot { width: 6px; height: 6px; background: #6366f1; border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; }
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
     </style>
 </head>
-<body class="bg-gray-50 flex flex-col h-screen font-sans text-gray-900">
+<body class="bg-gray-50 h-screen flex flex-col font-sans">
 
-    <!-- Header -->
-    <header class="glass-morphism sticky top-0 z-10 p-4 flex justify-between items-center">
+    <header class="glass border-b p-4 flex justify-between items-center sticky top-0 z-20">
         <div>
-            <h1 class="text-xl font-bold text-indigo-700">Margdarshak 🎓</h1>
-            <p class="text-xs text-gray-500 italic">Socratic Teaching Method</p>
+            <h1 class="text-xl font-bold text-indigo-600">Margdarshak 🎓</h1>
+            <p class="text-[10px] uppercase tracking-widest text-gray-400 font-semibold">Socratic Academic Mentor</p>
         </div>
-        <button id="settingsBtn" class="p-2 hover:bg-gray-100 rounded-full transition">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+        <button id="setBtn" class="p-2 hover:bg-gray-100 rounded-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         </button>
     </header>
 
-    <!-- Settings Overlay -->
-    <div id="settingsPanel" class="hidden absolute top-16 right-4 bg-white shadow-2xl border rounded-xl p-4 z-20 w-72">
-        <label class="block text-sm font-medium mb-1">Subject</label>
-        <select id="subject" class="w-full p-2 mb-3 border rounded">
-            <option>Physics</option>
-            <option>Mathematics</option>
-            <option>Chemistry</option>
-            <option>History</option>
-        </select>
-        
-        <label class="block text-sm font-medium mb-1">Language</label>
-        <select id="language" class="w-full p-2 mb-3 border rounded">
-            <option value="English">English</option>
-            <option value="Telugu">Telugu (తెలుగు)</option>
-            <option value="Hindi">Hindi (हिन्दी)</option>
-        </select>
-
-        <label class="block text-sm font-medium mb-1">API Key</label>
-        <input type="password" id="apiKeyInput" placeholder="Paste Gemini API Key" class="w-full p-2 mb-4 border rounded text-sm">
-        
-        <button id="saveSettings" class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition">Save & Close</button>
+    <div id="setPanel" class="hidden absolute top-16 right-4 bg-white shadow-xl border rounded-xl p-5 z-30 w-72">
+        <h3 class="font-bold mb-3 border-b pb-2 text-sm">Settings</h3>
+        <div class="space-y-3">
+            <div>
+                <label class="text-[10px] font-bold text-gray-500 uppercase">Subject</label>
+                <select id="subj" class="w-full p-2 border rounded text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <option>Physics</option><option>Mathematics</option><option>Chemistry</option><option>Biology</option><option>Computer Science</option>
+                </select>
+            </div>
+            <div>
+                <label class="text-[10px] font-bold text-gray-500 uppercase">Language</label>
+                <select id="lang" class="w-full p-2 border rounded text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <option>English</option><option>Telugu</option><option>Hindi</option>
+                </select>
+            </div>
+            <div>
+                <label class="text-[10px] font-bold text-gray-500 uppercase">Gemini API Key</label>
+                <input type="password" id="keyIn" placeholder="Paste Key Here" class="w-full p-2 border rounded text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+            </div>
+            <button id="saveBtn" class="w-full bg-indigo-600 text-white py-2 rounded-lg text-sm font-bold hover:bg-indigo-700 transition">Apply Changes</button>
+        </div>
     </div>
 
-    <!-- Chat Area -->
-    <main id="chatContainer" class="flex-1 overflow-y-auto p-4 space-y-4">
-        <div class="message-bubble bg-indigo-50 text-indigo-800 p-4 rounded-2xl rounded-tl-none self-start">
-            Hello! I am your Margdarshak tutor. I won't give you direct answers, but I will help you find them yourself. What are we studying today?
+    <main id="chatBox" class="flex-1 overflow-y-auto p-4 space-y-4">
+        <div class="msg bg-white border p-4 rounded-2xl rounded-tl-none shadow-sm text-gray-700">
+            Welcome! I am Margdarshak. Select your subject in settings and let's start learning. I'll guide you with questions!
         </div>
     </main>
 
-    <!-- Error Toast -->
-    <div id="errorToast" class="hidden mx-4 mb-2 p-3 bg-red-100 text-red-700 rounded-lg text-sm border border-red-200"></div>
+    <div id="toast" class="hidden mx-4 mb-2 p-3 bg-red-50 text-red-600 rounded-lg text-xs border border-red-100 font-medium"></div>
 
-    <!-- Input Area -->
     <footer class="p-4 bg-white border-t">
-        <form id="chatForm" class="flex gap-2 max-w-4xl mx-auto">
-            <input type="text" id="userInput" placeholder="Ask about friction, gravity..." class="flex-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500">
-            <button type="submit" id="sendBtn" class="bg-indigo-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-indigo-700 transition flex items-center gap-2">
+        <form id="chatForm" class="flex gap-2 max-w-3xl mx-auto">
+            <input type="text" id="userInput" placeholder="Ask about your topic..." class="flex-1 p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
+            <button id="send" class="bg-indigo-600 text-white px-5 py-3 rounded-xl font-bold hover:bg-indigo-700 transition flex items-center justify-center min-w-[80px]">
                 Send
             </button>
         </form>
     </footer>
 
-    <script type="module">
-        let apiKey = ""; // Will be updated from UI
-        
-        const chatContainer = document.getElementById('chatContainer');
-        const chatForm = document.getElementById('chatForm');
-        const userInput = document.getElementById('userInput');
-        const sendBtn = document.getElementById('sendBtn');
-        const errorToast = document.getElementById('errorToast');
-        const settingsBtn = document.getElementById('settingsBtn');
-        const settingsPanel = document.getElementById('settingsPanel');
-        const saveSettings = document.getElementById('saveSettings');
+    <script>
+        let apiKey = localStorage.getItem('marg_key') || "";
+        document.getElementById('keyIn').value = apiKey;
 
-        // Toggle Settings
-        settingsBtn.onclick = () => settingsPanel.classList.toggle('hidden');
-        saveSettings.onclick = () => {
-            apiKey = document.getElementById('apiKeyInput').value;
-            settingsPanel.classList.add('hidden');
-            if (apiKey) showToast("API Key saved!", "green");
+        const chatBox = document.getElementById('chatBox');
+        const chatForm = document.getElementById('chatForm');
+        const setBtn = document.getElementById('setBtn');
+        const setPanel = document.getElementById('setPanel');
+        const saveBtn = document.getElementById('saveBtn');
+        const toast = document.getElementById('toast');
+
+        setBtn.onclick = () => setPanel.classList.toggle('hidden');
+        saveBtn.onclick = () => {
+            apiKey = document.getElementById('keyIn').value.trim();
+            localStorage.setItem('marg_key', apiKey);
+            setPanel.classList.add('hidden');
+            showToast("Settings Saved!", "green");
         };
 
-        function showToast(msg, color = "red") {
-            errorToast.innerText = msg;
-            errorToast.className = `mx-4 mb-2 p-3 bg-${color}-100 text-${color}-700 rounded-lg text-sm border border-${color}-200`;
-            errorToast.classList.remove('hidden');
-            setTimeout(() => errorToast.classList.add('hidden'), 5000);
+        function showToast(m, c="red") {
+            toast.innerText = m;
+            toast.className = `mx-4 mb-2 p-3 bg-${c}-50 text-${c}-600 rounded-lg text-xs border border-${c}-100 font-medium`;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 5000);
         }
 
-        function appendMessage(role, text) {
+        function addMsg(role, text) {
             const div = document.createElement('div');
             const isUser = role === 'user';
-            div.className = `message-bubble p-4 rounded-2xl ${isUser ? 'bg-indigo-600 text-white self-end ml-auto rounded-tr-none' : 'bg-white border text-gray-800 self-start rounded-tl-none shadow-sm'}`;
+            div.className = `msg p-4 rounded-2xl ${isUser ? 'bg-indigo-600 text-white ml-auto rounded-tr-none' : 'bg-white border text-gray-700 rounded-tl-none shadow-sm'}`;
             div.innerText = text;
-            chatContainer.appendChild(div);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+            chatBox.appendChild(div);
+            chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        async function fetchGemini(prompt) {
-            if (!apiKey) {
-                throw new Error("Please enter an API Key in settings first.");
-            }
-
-            const subject = document.getElementById('subject').value;
-            const language = document.getElementById('language').value;
+        async function askAI(q) {
+            if(!apiKey) throw new Error("API Key required. Check Settings.");
             
-            const systemPrompt = `You are "Margdarshak", a Socratic tutor for ${subject}. 
-            Your goal is to guide the student to the answer by asking questions. 
-            NEVER give the full answer directly. 
-            Respond in ${language}. 
-            If the student is stuck, give a tiny hint, then ask another question.`;
+            const subj = document.getElementById('subj').value;
+            const lang = document.getElementById('lang').value;
+            const sys = `Role: Socratic Academic Mentor. Subject: ${subj}. Language: ${lang}. Rule: Never give direct answers. Guide with questions.`;
 
-            const payload = {
-                contents: [{ parts: [{ text: `${systemPrompt}\n\nStudent: ${prompt}` }] }]
-            };
+            // List of models to try (to avoid 404)
+            const models = ['gemini-1.5-flash-latest', 'gemini-1.5-flash', 'gemini-pro'];
+            let lastErr = "";
 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
-            // Exponential Backoff Implementation
-            let delay = 1000;
-            for (let i = 0; i < 5; i++) {
+            for(let m of models) {
                 try {
-                    const response = await fetch(url, {
+                    const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${apiKey}`, {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ contents: [{ parts: [{ text: `${sys}\n\nUser: ${q}` }] }] })
                     });
-                    
-                    const data = await response.json();
-                    
-                    if (response.ok) {
-                        return data.candidates[0].content.parts[0].text;
-                    }
-
-                    if (response.status === 429 || response.status >= 500) {
-                        await new Promise(r => setTimeout(r, delay));
-                        delay *= 2;
-                        continue;
-                    }
-
-                    throw new Error(data.error?.message || "Failed to connect to Gemini.");
-                } catch (err) {
-                    if (i === 4) throw err;
-                    await new Promise(r => setTimeout(r, delay));
-                    delay *= 2;
-                }
+                    const data = await resp.json();
+                    if(resp.ok) return data.candidates[0].content.parts[0].text;
+                    lastErr = data.error?.message || "Unknown error";
+                } catch(e) { lastErr = e.message; }
             }
+            throw new Error(lastErr);
         }
 
         chatForm.onsubmit = async (e) => {
             e.preventDefault();
-            const text = userInput.value.trim();
-            if (!text) return;
+            const q = document.getElementById('userInput').value.trim();
+            if(!q) return;
 
-            appendMessage('user', text);
-            userInput.value = '';
-            sendBtn.disabled = true;
-            sendBtn.innerHTML = '<span class="loader"></span> Thinking...';
+            addMsg('user', q);
+            document.getElementById('userInput').value = '';
+            document.getElementById('send').innerHTML = '<div class="dot-loader"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+            document.getElementById('send').disabled = true;
 
             try {
-                const aiResponse = await fetchGemini(text);
-                appendMessage('assistant', aiResponse);
-            } catch (err) {
-                showToast(err.message);
+                const res = await askAI(q);
+                addMsg('bot', res);
+            } catch(e) {
+                showToast(e.message);
             } finally {
-                sendBtn.disabled = false;
-                sendBtn.innerText = 'Send';
+                document.getElementById('send').innerHTML = 'Send';
+                document.getElementById('send').disabled = false;
             }
         };
     </script>
