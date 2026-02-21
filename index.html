@@ -3,66 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Margdarshak | Academic Mentor</title>
+    <title>Margdarshak | Socratic Mentor</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
-        .msg { max-width: 85%; animation: slide 0.2s ease-out; }
-        @keyframes slide { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .msg-anim { animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .dot-loader { display: flex; gap: 4px; }
-        .dot { width: 6px; height: 6px; background: #6366f1; border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; }
+        .dot { width: 6px; height: 6px; background: white; border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; }
         .dot:nth-child(1) { animation-delay: -0.32s; }
         .dot:nth-child(2) { animation-delay: -0.16s; }
         @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
     </style>
 </head>
-<body class="bg-gray-50 h-screen flex flex-col font-sans">
+<body class="bg-slate-50 h-screen flex flex-col font-sans">
 
-    <header class="glass border-b p-4 flex justify-between items-center sticky top-0 z-20">
+    <!-- Header -->
+    <header class="glass border-b p-4 flex justify-between items-center sticky top-0 z-20 shadow-sm">
         <div>
             <h1 class="text-xl font-bold text-indigo-600">Margdarshak 🎓</h1>
-            <p class="text-[10px] uppercase tracking-widest text-gray-400 font-semibold">Socratic Academic Mentor</p>
+            <p class="text-[10px] uppercase tracking-widest text-slate-400 font-bold">Academic Socratic Mentor</p>
         </div>
-        <button id="setBtn" class="p-2 hover:bg-gray-100 rounded-lg">
+        <button id="setBtn" class="p-2 hover:bg-slate-100 rounded-full transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         </button>
     </header>
 
-    <div id="setPanel" class="hidden absolute top-16 right-4 bg-white shadow-xl border rounded-xl p-5 z-30 w-72">
-        <h3 class="font-bold mb-3 border-b pb-2 text-sm">Settings</h3>
-        <div class="space-y-3">
+    <!-- Settings Panel -->
+    <div id="setPanel" class="hidden absolute top-16 right-4 bg-white shadow-2xl border rounded-2xl p-6 z-30 w-80">
+        <h3 class="font-bold mb-4 border-b pb-2 text-slate-700">Learning Settings</h3>
+        <div class="space-y-4">
             <div>
-                <label class="text-[10px] font-bold text-gray-500 uppercase">Subject</label>
-                <select id="subj" class="w-full p-2 border rounded text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-tighter">Subject Area</label>
+                <select id="subj" class="w-full p-2.5 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
                     <option>Physics</option><option>Mathematics</option><option>Chemistry</option><option>Biology</option><option>Computer Science</option>
                 </select>
             </div>
             <div>
-                <label class="text-[10px] font-bold text-gray-500 uppercase">Language</label>
-                <select id="lang" class="w-full p-2 border rounded text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-tighter">Instruction Language</label>
+                <select id="lang" class="w-full p-2.5 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
                     <option>English</option><option>Telugu</option><option>Hindi</option>
                 </select>
             </div>
             <div>
-                <label class="text-[10px] font-bold text-gray-500 uppercase">Gemini API Key</label>
-                <input type="password" id="keyIn" placeholder="Paste Key Here" class="w-full p-2 border rounded text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-tighter">Gemini API Key</label>
+                <input type="password" id="keyIn" placeholder="Enter API Key" class="w-full p-2.5 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                <p class="text-[9px] text-slate-400 mt-1">Key is stored locally in your browser.</p>
             </div>
-            <button id="saveBtn" class="w-full bg-indigo-600 text-white py-2 rounded-lg text-sm font-bold hover:bg-indigo-700 transition">Apply Changes</button>
+            <button id="saveBtn" class="w-full bg-indigo-600 text-white py-3 rounded-xl text-sm font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100">Save Configuration</button>
         </div>
     </div>
 
-    <main id="chatBox" class="flex-1 overflow-y-auto p-4 space-y-4">
-        <div class="msg bg-white border p-4 rounded-2xl rounded-tl-none shadow-sm text-gray-700">
-            Welcome! I am Margdarshak. Select your subject in settings and let's start learning. I'll guide you with questions!
+    <!-- Chat View -->
+    <main id="chatBox" class="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth">
+        <div class="msg-anim max-w-[85%] bg-white border border-slate-100 p-4 rounded-2xl rounded-tl-none shadow-sm text-slate-700">
+            Hi! I am <b>Margdarshak</b>. I won't give you direct answers, but I will ask you questions to help you find the answer yourself. What topic should we explore today?
         </div>
     </main>
 
-    <div id="toast" class="hidden mx-4 mb-2 p-3 bg-red-50 text-red-600 rounded-lg text-xs border border-red-100 font-medium"></div>
+    <!-- Toast Notifications -->
+    <div id="toast" class="hidden mx-4 mb-2 p-3 rounded-xl text-xs font-semibold border text-center transition-all animate-bounce"></div>
 
-    <footer class="p-4 bg-white border-t">
-        <form id="chatForm" class="flex gap-2 max-w-3xl mx-auto">
-            <input type="text" id="userInput" placeholder="Ask about your topic..." class="flex-1 p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
-            <button id="send" class="bg-indigo-600 text-white px-5 py-3 rounded-xl font-bold hover:bg-indigo-700 transition flex items-center justify-center min-w-[80px]">
+    <!-- Input Area -->
+    <footer class="p-4 bg-white border-t border-slate-100">
+        <form id="chatForm" class="flex gap-2 max-w-4xl mx-auto">
+            <input type="text" id="userInput" placeholder="Type a concept (e.g., 'Newton's Third Law')..." class="flex-1 p-3.5 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm bg-slate-50" autocomplete="off">
+            <button id="send" class="bg-indigo-600 text-white px-6 py-3.5 rounded-2xl font-bold hover:bg-indigo-700 transition flex items-center justify-center min-w-[90px]">
                 Send
             </button>
         </form>
@@ -80,73 +86,119 @@
         const toast = document.getElementById('toast');
 
         setBtn.onclick = () => setPanel.classList.toggle('hidden');
+        
         saveBtn.onclick = () => {
             apiKey = document.getElementById('keyIn').value.trim();
             localStorage.setItem('marg_key', apiKey);
             setPanel.classList.add('hidden');
-            showToast("Settings Saved!", "green");
+            showToast("Configuration Updated!", "indigo");
         };
 
-        function showToast(m, c="red") {
+        function showToast(m, color="red") {
             toast.innerText = m;
-            toast.className = `mx-4 mb-2 p-3 bg-${c}-50 text-${c}-600 rounded-lg text-xs border border-${c}-100 font-medium`;
+            const colors = {
+                red: "bg-red-50 text-red-600 border-red-100",
+                indigo: "bg-indigo-50 text-indigo-600 border-indigo-100",
+                green: "bg-green-50 text-green-600 border-green-100"
+            };
+            toast.className = `mx-4 mb-2 p-3 rounded-xl text-xs font-semibold border text-center ${colors[color] || colors.red}`;
             toast.classList.remove('hidden');
-            setTimeout(() => toast.classList.add('hidden'), 5000);
+            setTimeout(() => toast.classList.add('hidden'), 4000);
         }
 
         function addMsg(role, text) {
             const div = document.createElement('div');
             const isUser = role === 'user';
-            div.className = `msg p-4 rounded-2xl ${isUser ? 'bg-indigo-600 text-white ml-auto rounded-tr-none' : 'bg-white border text-gray-700 rounded-tl-none shadow-sm'}`;
-            div.innerText = text;
+            div.className = `msg-anim max-w-[85%] p-4 rounded-2xl shadow-sm ${isUser ? 'bg-indigo-600 text-white ml-auto rounded-tr-none' : 'bg-white border border-slate-100 text-slate-700 rounded-tl-none'}`;
+            div.innerHTML = text.replace(/\n/g, '<br>');
             chatBox.appendChild(div);
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        async function askAI(q) {
-            if(!apiKey) throw new Error("API Key required. Check Settings.");
-            
-            const subj = document.getElementById('subj').value;
-            const lang = document.getElementById('lang').value;
-            const sys = `Role: Socratic Academic Mentor. Subject: ${subj}. Language: ${lang}. Rule: Never give direct answers. Guide with questions.`;
-
-            // List of models to try (to avoid 404)
-            const models = ['gemini-1.5-flash-latest', 'gemini-1.5-flash', 'gemini-pro'];
-            let lastErr = "";
-
-            for(let m of models) {
+        async function fetchWithRetry(url, options, retries = 3) {
+            for (let i = 0; i < retries; i++) {
                 try {
-                    const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${apiKey}`, {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({ contents: [{ parts: [{ text: `${sys}\n\nUser: ${q}` }] }] })
-                    });
-                    const data = await resp.json();
-                    if(resp.ok) return data.candidates[0].content.parts[0].text;
-                    lastErr = data.error?.message || "Unknown error";
-                } catch(e) { lastErr = e.message; }
+                    const response = await fetch(url, options);
+                    if (response.ok) return response;
+                    // If 404 or 400, it's likely a model name issue, don't just retry the same URL
+                    if (response.status >= 400 && response.status < 500) return response;
+                    await new Promise(r => setTimeout(r, 1000 * Math.pow(2, i)));
+                } catch (err) {
+                    if (i === retries - 1) throw err;
+                }
             }
-            throw new Error(lastErr);
+        }
+
+        async function askAI(userQuery) {
+            if(!apiKey) throw new Error("Please add your Gemini API Key in Settings.");
+            
+            const subject = document.getElementById('subj').value;
+            const language = document.getElementById('lang').value;
+            
+            const systemPrompt = `Role: Socratic Tutor. Subject: ${subject}. Language: ${language}. Instruction: Do NOT provide direct answers. Ask 1-2 leading questions to help the user discover the concept themselves. Use simple formatting. Respond in ${language}.`;
+
+            // List of valid model IDs for v1beta to try sequentially
+            const modelVariations = [
+                'gemini-1.5-flash-latest',
+                'gemini-1.5-flash',
+                'gemini-pro'
+            ];
+
+            let lastErrorMessage = "Failed to connect to Gemini API.";
+
+            for (const modelId of modelVariations) {
+                try {
+                    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${apiKey}`;
+                    const response = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: `${systemPrompt}\n\nUser Question: ${userQuery}` }] }]
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        return data.candidates[0].content.parts[0].text;
+                    } else {
+                        // If model not found, try the next variation
+                        if (data.error?.message?.includes("not found")) {
+                            console.warn(`Model ${modelId} not found, trying next...`);
+                            continue;
+                        }
+                        lastErrorMessage = data.error?.message || lastErrorMessage;
+                    }
+                } catch (e) {
+                    console.error(`Error with ${modelId}:`, e);
+                }
+            }
+            throw new Error(lastErrorMessage);
         }
 
         chatForm.onsubmit = async (e) => {
             e.preventDefault();
-            const q = document.getElementById('userInput').value.trim();
+            const input = document.getElementById('userInput');
+            const q = input.value.trim();
             if(!q) return;
 
             addMsg('user', q);
-            document.getElementById('userInput').value = '';
-            document.getElementById('send').innerHTML = '<div class="dot-loader"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
-            document.getElementById('send').disabled = true;
+            input.value = '';
+            
+            const btn = document.getElementById('send');
+            const originalBtnHtml = btn.innerHTML;
+            btn.innerHTML = '<div class="dot-loader"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+            btn.disabled = true;
 
             try {
-                const res = await askAI(q);
-                addMsg('bot', res);
+                const response = await askAI(q);
+                addMsg('bot', response);
             } catch(e) {
                 showToast(e.message);
+                console.error(e);
             } finally {
-                document.getElementById('send').innerHTML = 'Send';
-                document.getElementById('send').disabled = false;
+                btn.innerHTML = originalBtnHtml;
+                btn.disabled = false;
             }
         };
     </script>
